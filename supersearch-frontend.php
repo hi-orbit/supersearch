@@ -1,0 +1,32 @@
+<?php
+
+
+function supersearch_enqueue_scripts() {
+    wp_enqueue_script('supersearch-autocomplete', plugin_dir_url(__FILE__) . 'supersearch.js', [], '1.0', true);
+    wp_enqueue_script('featherlight', plugin_dir_url(__FILE__) . 'featherlight.min.js', [], '1.0', true);
+}
+add_action('wp_enqueue_scripts', 'supersearch_enqueue_scripts');
+
+function supersearch_enqueue_styles() {
+    wp_enqueue_style('featherlight', plugin_dir_url(__FILE__) . 'featherlight.min.css');
+    wp_enqueue_style('supersearch', plugin_dir_url(__FILE__) . 'supersearch.css');
+}
+add_action('wp_enqueue_scripts', 'supersearch_enqueue_styles');
+
+/*
+* Add a shortcode to display the search input
+* Usage: [supersearch]
+*/
+function supersearch_input_shortcode() {
+    header("Access-Control-Allow-Origin: https://supersearch.hi-orbit.com");
+    header("Content-Security-Policy: frame-ancestors 'self' https://supersearch.hi-orbit.com");
+
+    ob_start(); // Start output buffering
+    ?>
+    <input type="text" id="supersearch-input" placeholder="Type your search here...">
+    <input type="hidden" id="supersearch-key" value="<?php echo get_option('public_key');?>">
+    <?php
+    return ob_get_clean(); // Return the buffered content
+}
+add_shortcode('supersearch', 'supersearch_input_shortcode');
+
