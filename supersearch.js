@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var id = getTrackingCookie() ?? setTrackingCookie();
             var searchQuery = encodeURIComponent(searchInput.value);
             iframeURL = ["https://supersearch.hi-orbit.com/frame?", "search_term=", searchQuery, '&id=', id, '&key=', key.value].join('');
+            //iframeURL = ["http://supersearch.test:8081/frame?", "search_term=", searchQuery, '&id=', id, '&key=', key.value].join('');
 
             if ($.featherlight.current()) {
                 $.featherlight.current().$instance.find('iframe').attr('src', iframeURL);
