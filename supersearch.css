@@ -57,6 +57,11 @@
 .featherlight-loading {
 	background-color: transparent !important;
 }
+.featherlight-close {
+	font-size: 20px;
+	margin-right: 16px;
+	font-weight: bold;
+}
 .super-search-loader {
 	border: 16px solid #f3f3f3; /* Light grey */
 	border-top: 16px solid #3498db; /* Blue */

@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 $.featherlight.current().$instance.find('iframe').attr('src', iframeURL);
             } else {
                 $.featherlight({
-                    closeOnClick: false,
-                    closeOnEsc: false,
-                    closeIcon: '',
+                    closeOnClick: true,
+                    closeOnEsc: true,
+                    closeIcon: '&#10005;',
                     loading: '<div class="super-search-loader"></div>',
                     iframe: iframeURL,
                     onKeyUp: function () {
@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     afterOpen: function (event) {
                         repositionFeatherlight(this.$instance);
                     },
+                    beforeClose: function (event) {
+                        searchInput.value = '';
+                    }
                 });
             }
             searchInput.focus();
