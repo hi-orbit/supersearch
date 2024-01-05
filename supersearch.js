@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    searchInput.addEventListener('keyup', function () {
+    searchInput.addEventListener('input', function () {
         if (searchInput.value.trim() === '') {
             $.featherlight.current().close();
         } else {
