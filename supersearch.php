@@ -337,12 +337,18 @@ function supersearch_settings_private_key_field_callback()
 
 function supersearch_settings_desktop_top_offset_field_callback()
 {
-    $desktop_top_offset = get_option('supersearch_desktop_top_offset') ?? 43;
+    $desktop_top_offset = get_option('supersearch_desktop_top_offset');
+    if (!isset($desktop_top_offset) || $desktop_top_offset == '' || $desktop_top_offset == null) {
+        $desktop_top_offset = 43;
+    }
     echo '<input type="text" id="supersearch_desktop_top_offset" name="supersearch_desktop_top_offset" value="' . esc_attr($desktop_top_offset) . '" size="6" />';
 }
 function supersearch_settings_mobile_top_offset_field_callback()
 {
-    $mobile_top_offset = get_option('supersearch_mobile_top_offset') ?? 149;
+    $mobile_top_offset = get_option('supersearch_mobile_top_offset');
+    if (!isset($mobile_top_offset) || $mobile_top_offset == '' || $mobile_top_offset == null) {
+        $mobile_top_offset = 149;
+    }
     echo '<input type="text" id="supersearch_mobile_top_offset" name="supersearch_mobile_top_offset" value="' . esc_attr($mobile_top_offset) . '" size="6" />';
 }
 
