@@ -23,8 +23,10 @@ function supersearch_input_shortcode() {
 
     ob_start(); // Start output buffering
     ?>
-    <input type="text" id="supersearch-input" placeholder="Type your search here...">
-    <input type="hidden" id="supersearch-key" value="<?php echo get_option('public_key');?>">
+    <input type="text" id="supersearch-input" placeholder="Type your search here..." value="" onkeyup="search_query(this);">
+    <input type="hidden" id="supersearch-key" value="<?php echo get_option('supersearch_public_key');?>">
+    <input type="hidden" id="mobile_top_offset" value="<?php echo get_option('supersearch_mobile_top_offset');?>">
+    <input type="hidden" id="desktop_top_offset" value="<?php echo get_option('supersearch_desktop_top_offset');?>">
     <?php
     return ob_get_clean(); // Return the buffered content
 }

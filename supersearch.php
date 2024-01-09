@@ -33,7 +33,7 @@ function supersearch_add_tabs() {
     <p>Super Search provides a hyperfast search solution for your WordPress site.</p>
     <h2 class="nav-tab-wrapper">
         <a href="?page=supersearch-settings&tab=usage" class="nav-tab <?php echo $active_tab == 'usage' ? 'nav-tab-active' : ''; ?>">Account Usage</a>
-        <a href="?page=supersearch-settings&tab=credentials" class="nav-tab <?php echo $active_tab == 'credentials' ? 'nav-tab-active' : ''; ?>">API Credentials</a>
+        <a href="?page=supersearch-settings&tab=settings" class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>">Settings</a>
         <a href="?page=supersearch-settings&tab=sync" class="nav-tab <?php echo $active_tab == 'sync' ? 'nav-tab-active' : ''; ?>">Sync</a>
     </h2>
     <?php
@@ -78,8 +78,8 @@ function supersearch_settings_page()
                 }
                 ?>
 
-        <?php } else if ($active_tab == 'credentials') { ?>
-                <h2>Access Credentials</h2>
+        <?php } else if ($active_tab == 'settings') { ?>
+                <h2>Settings</h2>
                 <form method="post" action="options.php">
                     <?php
                     settings_fields('supersearch-settings-group');
@@ -265,8 +265,10 @@ function query_arguments($posts_per_page, $page_number = false)
 add_action('admin_init', 'supersearch_settings_init');
 function supersearch_settings_init()
 {
-    register_setting('supersearch-settings-group', 'public_key');
-    register_setting('supersearch-settings-group', 'private_key');
+    register_setting('supersearch-settings-group', 'supersearch_public_key');
+    register_setting('supersearch-settings-group', 'supersearch_private_key');
+    register_setting('supersearch-settings-group', 'supersearch_desktop_top_offset');
+    register_setting('supersearch-settings-group', 'supersearch_mobile_top_offset');
 
     add_settings_section(
         'supersearch-settings-section',
@@ -276,18 +278,38 @@ function supersearch_settings_init()
     );
 
     add_settings_field(
-        'public-key-field',
+        'supersearch-public-key-field',
         'Public Key',
         'supersearch_settings_public_key_field_callback',
         'supersearch-settings',
         'supersearch-settings-section'
     );
     add_settings_field(
-        'private-key-field',
+        'supersearch-private-key-field',
         'Private Key',
         'supersearch_settings_private_key_field_callback',
         'supersearch-settings',
         'supersearch-settings-section'
+    );
+    add_settings_section(
+        'supersearch-position-section',
+        'Search Window Position',
+        'supersearch_position_section_callback',
+        'supersearch-settings'
+    );
+    add_settings_field(
+        'supersearch-desktop-top-offset-field',
+        'Desktop Search Window Top Offset',
+        'supersearch_settings_desktop_top_offset_field_callback',
+        'supersearch-settings',
+        'supersearch-position-section'
+    );
+    add_settings_field(
+        'supersearch-mobile-top-offset-field',
+        'Mobile Search Window Top Offset',
+        'supersearch_settings_mobile_top_offset_field_callback',
+        'supersearch-settings',
+        'supersearch-position-section'
     );
 }
 
@@ -296,16 +318,32 @@ function supersearch_settings_section_callback()
     echo '<p><strong>Get your API Keys by creating an account <a href="https://supersearch.hi-orbit.com" target="_blank">here</a></strong></p><p>Enter your API keys below.</p>';
 }
 
+function supersearch_position_section_callback()
+{
+    echo '<p>Enter the top offset for the search window below.</p>';
+}
+
 function supersearch_settings_public_key_field_callback()
 {
-    $public_key = get_option('public_key');
-    echo '<input type="text" id="public_key" name="public_key" value="' . esc_attr($public_key) . '" />';
+    $public_key = get_option('supersearch_public_key');
+    echo '<input type="text" id="supersearch_public_key" name="supersearch_public_key" value="' . esc_attr($public_key) . '" size="30"/>';
 }
 
 function supersearch_settings_private_key_field_callback()
 {
-    $private_key = get_option('private_key');
-    echo '<input type="text" id="private_key" name="private_key" value="' . esc_attr($private_key) . '" />';
+    $private_key = get_option('supersearch_private_key');
+    echo '<input type="text" id="supersearch_private_key" name="supersearch_private_key" value="' . esc_attr($private_key) . '" size="30"/>';
+}
+
+function supersearch_settings_desktop_top_offset_field_callback()
+{
+    $desktop_top_offset = get_option('supersearch_desktop_top_offset') ?? 43;
+    echo '<input type="text" id="supersearch_desktop_top_offset" name="supersearch_desktop_top_offset" value="' . esc_attr($desktop_top_offset) . '" size="6" />';
+}
+function supersearch_settings_mobile_top_offset_field_callback()
+{
+    $mobile_top_offset = get_option('supersearch_mobile_top_offset') ?? 149;
+    echo '<input type="text" id="supersearch_mobile_top_offset" name="supersearch_mobile_top_offset" value="' . esc_attr($mobile_top_offset) . '" size="6" />';
 }
 
 /**
