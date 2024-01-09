@@ -326,13 +326,13 @@ function supersearch_position_section_callback()
 function supersearch_settings_public_key_field_callback()
 {
     $public_key = get_option('supersearch_public_key');
-    echo '<input type="text" id="supersearch_public_key" name="supersearch_public_key" value="' . esc_attr($public_key) . '" size="30"/>';
+    echo '<input type="text" id="supersearch_public_key" name="supersearch_public_key" value="' . esc_attr($public_key) . '" size="40"/>';
 }
 
 function supersearch_settings_private_key_field_callback()
 {
     $private_key = get_option('supersearch_private_key');
-    echo '<input type="text" id="supersearch_private_key" name="supersearch_private_key" value="' . esc_attr($private_key) . '" size="30"/>';
+    echo '<input type="text" id="supersearch_private_key" name="supersearch_private_key" value="' . esc_attr($private_key) . '" size="40"/>';
 }
 
 function supersearch_settings_desktop_top_offset_field_callback()
@@ -419,8 +419,8 @@ function supersearch_perform_curl_request($data, $action)
 
     $url = 'https://supersearch.hi-orbit.com/api/search/' . $action;
     //$url = 'http://supersearch.test:8081/api/search/' . $action;
-    $public_key = get_option('public_key');
-    $private_key = get_option('private_key');
+    $public_key = get_option('supersearch_public_key');
+    $private_key = get_option('supersearch_private_key');
     $token = md5($public_key . $private_key);
 
     $ch = curl_init($url);
