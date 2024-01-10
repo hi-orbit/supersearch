@@ -51,6 +51,11 @@ jQuery(document).ready(function($) {
             type: 'POST',
             data: data,
             success: function(response) {
+
+                if (response.success === false) {
+                    $('#' + post_type + '-progress-status').text(response.data);
+                    return;
+                }
                 
                 updateProgressBar(response.data.progress,post_type,response.data.product_count);
     

@@ -167,6 +167,7 @@ function process_posts_handler()
     $locale = get_locale();
     $language_code = substr($locale, 0, 2);
     $response = supersearch_perform_curl_request($posts, 'createupdate?transform=wp&language=' . $language_code);
+    $response = json_decode($response);
     if (isset($response->status_code) && $response->status_code == 508) {
         wp_send_json_error($response->message, 508);
     }
