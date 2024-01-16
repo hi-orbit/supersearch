@@ -245,22 +245,22 @@ add_filter('rest_prepare_post', 'add_plain_text_excerpt_to_api_response', 10, 3)
 add_filter('rest_prepare_page', 'add_plain_text_excerpt_to_api_response', 10, 3);
 
 
-function query_arguments($posts_per_page, $page_number = false)
-{
+// function query_arguments($posts_per_page, $page_number = false)
+// {
 
-    $return = [
-        'post_type'      => array('product'), // Add all desired post types here
-        'posts_per_page' => $posts_per_page,
-        'post_status'    => array('publish', 'inherit'),
-        'orderby'        => 'type',
-    ];
+//     $return = [
+//         'post_type'      => array('product'), // Add all desired post types here
+//         'posts_per_page' => $posts_per_page,
+//         'post_status'    => array('publish', 'inherit'),
+//         'orderby'        => 'type',
+//     ];
 
-    if ($page_number) {
-        $return['paged'] = $page_number;
-    }
+//     if ($page_number) {
+//         $return['paged'] = $page_number;
+//     }
 
-    return $return;
-}
+//     return $return;
+// }
 
 // Register settings, a section, and fields
 add_action('admin_init', 'supersearch_settings_init');

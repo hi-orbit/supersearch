@@ -18,8 +18,8 @@ add_action('wp_enqueue_scripts', 'supersearch_enqueue_styles');
 * Usage: [supersearch]
 */
 function supersearch_input_shortcode() {
-    header("Access-Control-Allow-Origin: https://supersearch.hi-orbit.com");
-    header("Content-Security-Policy: frame-ancestors 'self' https://supersearch.hi-orbit.com");
+    //header("Access-Control-Allow-Origin: https://supersearch.hi-orbit.com");
+    //header("Content-Security-Policy: frame-ancestors 'self' https://supersearch.hi-orbit.com");
 
     ob_start(); // Start output buffering
     ?>
