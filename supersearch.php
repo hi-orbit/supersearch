@@ -3,9 +3,13 @@
 /**
  * Plugin Name: Super Search
  * Description: Super Search provides a hyperfast search solution for your WordPress site.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: https://www.hi-orbit.com
  */
+
+define('_SEARCH_URL', 'https://supersearch.hi-orbit.com/api/search/');
+//define('_SEARCH_URL', 'https://staging.supersearch.hi-orbit.com/api/search/');
+//define('_SEARCH_URL', 'http://supersearch.test:8081/api/search/');
 
 /**
  * Add a menu item to the admin menu
@@ -245,23 +249,6 @@ add_filter('rest_prepare_post', 'add_plain_text_excerpt_to_api_response', 10, 3)
 add_filter('rest_prepare_page', 'add_plain_text_excerpt_to_api_response', 10, 3);
 
 
-// function query_arguments($posts_per_page, $page_number = false)
-// {
-
-//     $return = [
-//         'post_type'      => array('product'), // Add all desired post types here
-//         'posts_per_page' => $posts_per_page,
-//         'post_status'    => array('publish', 'inherit'),
-//         'orderby'        => 'type',
-//     ];
-
-//     if ($page_number) {
-//         $return['paged'] = $page_number;
-//     }
-
-//     return $return;
-// }
-
 // Register settings, a section, and fields
 add_action('admin_init', 'supersearch_settings_init');
 function supersearch_settings_init()
@@ -418,8 +405,7 @@ function supersearch_log( $message ) {
 function supersearch_perform_curl_request($data, $action)
 {
 
-    $url = 'https://supersearch.hi-orbit.com/api/search/' . $action;
-    //$url = 'http://supersearch.test:8081/api/search/' . $action;
+    $url = _SEARCH_URL . $action;
     $public_key = get_option('supersearch_public_key');
     $private_key = get_option('supersearch_private_key');
     $token = md5($public_key . $private_key);
