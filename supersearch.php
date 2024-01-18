@@ -7,8 +7,8 @@
  * Author: https://www.hi-orbit.com
  */
 
-//define('_SEARCH_URL', 'https://supersearch.hi-orbit.com/api/search/');
-define('_SEARCH_URL', 'https://staging.supersearch.hi-orbit.com/api/search/');
+define('_SEARCH_URL', 'https://supersearch.hi-orbit.com/api/search/');
+//define('_SEARCH_URL', 'https://staging.supersearch.hi-orbit.com/api/search/');
 //define('_SEARCH_URL', 'http://supersearch.test:8081/api/search/');
 
 /**
