@@ -1,6 +1,10 @@
+const searchURL = 'https://supersearch.hi-orbit.com';
+// const searchURL = 'https://staging.supersearch.hi-orbit.com';
+// const searchURL = '"http://supersearch.test:8081';
+
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('message', function (event) {
-        if (event.origin !== 'https://supersearch.hi-orbit.com') return;
+        if (event.origin !== searchURL) return;
         if (event.data && event.data.is_suggestion === 'true') {
             if (searchInput.value !== event.data.data) {
                 searchInput.value = event.data.data;
@@ -22,8 +26,7 @@ function search_query(searchInput) {
         var key = document.getElementById('supersearch-key').value;
         var id = getTrackingCookie() ?? setTrackingCookie();
         var searchQuery = encodeURIComponent(searchInput.value);
-        iframeURL = ["https://supersearch.hi-orbit.com/frame?", "search_term=", searchQuery, '&id=', id, '&key=', key].join('');
-        //iframeURL = ["http://supersearch.test:8081/frame?", "search_term=", searchQuery, '&id=', id, '&key=', key].join('');
+        iframeURL = [searchURL + '/frame?', "search_term=", searchQuery, '&id=', id, '&key=', key].join('');
 
         if ($.featherlight.current()) {
             $.featherlight.current().$instance.find('iframe').attr('src', iframeURL);
@@ -54,7 +57,7 @@ function search_query(searchInput) {
 
 function setTrackingCookie() {
     var trackingId = generateTrackingId();
-    var daysValid = 90; // The number of days until the cookie expires
+    var daysValid = 30; // The number of days until the cookie expires
     var expiryDate = new Date();
     expiryDate.setTime(expiryDate.getTime() + (daysValid * 24 * 60 * 60 * 1000));
     var expires = "expires=" + expiryDate.toUTCString();
