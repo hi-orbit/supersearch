@@ -24,7 +24,7 @@ function search_query(searchInput) {
         $('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
 
         var key = document.getElementById('supersearch-key').value;
-        var id = getTrackingCookie() ?? setTrackingCookie();
+        var id = getTrackingCookie();
         var searchQuery = encodeURIComponent(searchInput.value);
         iframeURL = [searchURL + '/frame?', "search_term=", searchQuery, '&id=', id, '&key=', key].join('');
 
@@ -57,12 +57,16 @@ function search_query(searchInput) {
 
 function setTrackingCookie() {
     var trackingId = generateTrackingId();
-    var daysValid = 30; // The number of days until the cookie expires
+    var daysValid = 90; // The number of days until the cookie expires
     var expiryDate = new Date();
     expiryDate.setTime(expiryDate.getTime() + (daysValid * 24 * 60 * 60 * 1000));
     var expires = "expires=" + expiryDate.toUTCString();
 
-    document.cookie = "SuperSearchId=" + trackingId + ";" + expires + ";path=/";
+    // Ensure the cookie is set with Secure and SameSite attributes if the page is served over HTTPS
+    var secure = window.location.protocol === 'https:' ? '; Secure' : '';
+    var sameSite = '; SameSite=Lax'; // or SameSite=Strict, based on your requirements
+
+    document.cookie = "SuperSearchId=" + trackingId + ";" + expires + ";path=/" + secure + sameSite;
     return trackingId;
 }
 
@@ -86,7 +90,7 @@ function getTrackingCookie() {
             return c.substring(name.length, c.length);
         }
     }
-    return "";
+    return setTrackingCookie();
 }
 
 function repositionFeatherlight(instance) {

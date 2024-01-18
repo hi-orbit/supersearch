@@ -2,7 +2,7 @@
 
 
 function supersearch_enqueue_scripts() {
-    wp_enqueue_script('supersearch-autocomplete', plugin_dir_url(__FILE__) . 'supersearch.js', [], '1.0', true);
+    wp_enqueue_script('supersearch-autocomplete', plugin_dir_url(__FILE__) . 'supersearch.js', [], '1.2.1', true);
     wp_enqueue_script('featherlight', plugin_dir_url(__FILE__) . 'featherlight.min.js', [], '1.0', true);
 }
 add_action('wp_enqueue_scripts', 'supersearch_enqueue_scripts');
