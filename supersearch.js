@@ -1,6 +1,6 @@
-//const searchURL = 'https://supersearch.hi-orbit.com';
+const searchURL = 'https://supersearch.hi-orbit.com';
 // const searchURL = 'https://staging.supersearch.hi-orbit.com';
-const searchURL = 'http://supersearch.test:8081';
+//const searchURL = 'http://supersearch.test:8081';
 
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('message', function (event) {
