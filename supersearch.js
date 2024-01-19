@@ -1,6 +1,6 @@
-const searchURL = 'https://supersearch.hi-orbit.com';
+//const searchURL = 'https://supersearch.hi-orbit.com';
 // const searchURL = 'https://staging.supersearch.hi-orbit.com';
-// const searchURL = '"http://supersearch.test:8081';
+const searchURL = 'http://supersearch.test:8081';
 
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('message', function (event) {
@@ -22,11 +22,10 @@ function search_query(searchInput) {
     } else {
         var searchInputPosition = $('#supersearch-input').offset();
         $('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
-
         var key = document.getElementById('supersearch-key').value;
-        var id = getTrackingCookie();
         var searchQuery = encodeURIComponent(searchInput.value);
-        iframeURL = [searchURL + '/frame?', "search_term=", searchQuery, '&id=', id, '&key=', key].join('');
+        var tracking_id = document.getElementById('supersearch-id').value;
+        iframeURL = [searchURL + '/frame?', "search_term=", searchQuery, '&id=', tracking_id, '&key=', key].join('');
 
         if ($.featherlight.current()) {
             $.featherlight.current().$instance.find('iframe').attr('src', iframeURL);
@@ -54,44 +53,6 @@ function search_query(searchInput) {
         searchInput.focus();
     }
 };
-
-function setTrackingCookie() {
-    var trackingId = generateTrackingId();
-    var daysValid = 90; // The number of days until the cookie expires
-    var expiryDate = new Date();
-    expiryDate.setTime(expiryDate.getTime() + (daysValid * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + expiryDate.toUTCString();
-
-    // Ensure the cookie is set with Secure and SameSite attributes if the page is served over HTTPS
-    var secure = window.location.protocol === 'https:' ? '; Secure' : '';
-    var sameSite = '; SameSite=Lax'; // or SameSite=Strict, based on your requirements
-
-    document.cookie = "SuperSearchId=" + trackingId + ";" + expires + ";path=/" + secure + sameSite;
-    return trackingId;
-}
-
-function generateTrackingId() {
-    return 'xxxx-xxxx-xxxx-xxxx'.replace(/[x]/g, function (c) {
-        var r = Math.random() * 16 | 0;
-        return r.toString(16);
-    });
-}
-
-function getTrackingCookie() {
-    var name = "SuperSearchId=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return setTrackingCookie();
-}
 
 function repositionFeatherlight(instance) {
     var searchInputPosition = $('#supersearch-input').offset();
