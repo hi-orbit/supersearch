@@ -168,8 +168,7 @@ function process_posts_handler()
 
     $product_count = (isset($product_count)) ? $product_count + count($posts) : count($posts);
 
-    $locale = get_locale();
-    $language_code = substr($locale, 0, 2);
+    $language_code = get_locale();
     $response = supersearch_perform_curl_request($posts, 'createupdate?transform=wp&language=' . $language_code);
     $response = json_decode($response);
     if (isset($response->status_code) && $response->status_code == 508) {
@@ -375,8 +374,7 @@ function supersearch_update_function(){
             'posts_per_page' => -1
         ]);
 
-        $locale = get_locale();
-        $language_code = substr($locale, 0, 2);
+        $language_code = get_locale();
 
         $chunked_posts = array_chunk($posts, 10);
         foreach ($chunked_posts as $chunk){

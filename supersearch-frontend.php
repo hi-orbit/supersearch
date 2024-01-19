@@ -31,7 +31,7 @@ function supersearch_input_shortcode() {
     <input type="hidden" id="supersearch-key" value="<?php echo get_option('supersearch_public_key');?>">
     <input type="hidden" id="mobile_top_offset" value="<?php echo get_option('supersearch_mobile_top_offset');?>">
     <input type="hidden" id="desktop_top_offset" value="<?php echo get_option('supersearch_desktop_top_offset');?>">
-    <input type="hidden" id="supersearch-id" value="<?php echo $_COOKIE['_super_search_id']; ?>" >
+    <input type="hidden" id="supersearch-id" value="<?php echo $_COOKIE['_super_search_id'] ?? ''; ?>" >
     <?php
     return ob_get_clean(); // Return the buffered content    
 }
