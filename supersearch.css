@@ -1,12 +1,24 @@
 #supersearch-iframe {
-    display: none; /* Initially hidden */
-    position: absolute; /* Float above everything */
-    z-index: 1000000; /* High z-index to ensure it's above other elements */
-    width: 100%; /* Adjust the width as needed */
-    height: 400px; /* Adjust the height as needed */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Adds a shadow for better visibility */
+    display: none; 
+    position: absolute; 
+    z-index: 1000001; 
+    width: 100%; 
+    height: 400px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
 	border-radius: 6px;
 	margin-top: 6px;
+}
+
+#supersearch-loading-mask {
+    position: fixed; 
+    width: 100%;
+    height: 100%; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.841); 
+    z-index: 1000000 
 }
 
 /* Position the iframe right below the search input */
@@ -16,18 +28,18 @@
 	font-size: 14px;
 	padding: 5px;
 	border-radius: 5px;
-	z-index: 1000000;
+	z-index: 1000001;
 }
 
 /* Additional styles for the container to position the iframe correctly */
 .container {
     position: relative;
-	z-index: 1000000;
+	z-index: 1000001;
 }
 
 .featherlight {
 	width: 80vw;
-	height: 80vh;
+	height: 70vh;
 	margin-right: auto;
 	margin-left: auto;
 }

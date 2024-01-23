@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+    $(document).on('click', function(e) {
+        if ($(e.target).closest('.featherlight').length === 0) {
+            $.featherlight.close();
+        }
+    });
 });
 
 function search_query(searchInput) {
@@ -24,7 +29,6 @@ function search_query(searchInput) {
         var searchQuery = encodeURIComponent(searchInput.value);
         var tracking_id = document.getElementById('supersearch-id').value;
         iframeURL = [searchURL + '/frame?', "search_term=", searchQuery, '&id=', tracking_id, '&key=', key].join('');
-
         if ($.featherlight.current()) {
             $.featherlight.current().$instance.find('iframe').attr('src', iframeURL);
         } else {
