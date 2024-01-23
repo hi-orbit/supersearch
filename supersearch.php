@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Super Search
  * Description: Super Search provides a hyperfast search solution for your WordPress site.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: https://www.hi-orbit.com
  */
 
