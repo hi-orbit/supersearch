@@ -3,13 +3,11 @@
 /**
  * Plugin Name: Super Search
  * Description: Super Search provides a hyperfast search solution for your WordPress site.
- * Version: 1.2.0
+ * Version: 1.0.2
  * Author: https://www.hi-orbit.com
  */
 
 define('_SEARCH_URL', 'https://supersearch.hi-orbit.com/api/search/');
-//define('_SEARCH_URL', 'https://staging.supersearch.hi-orbit.com/api/search/');
-//define('_SEARCH_URL', 'http://supersearch.test:8081/api/search/');
 
 /**
  * Add a menu item to the admin menu
