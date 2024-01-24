@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('message', function (event) {
         if (event.origin !== searchURL) return;
         if (event.data && event.data.is_suggestion === 'true') {
+            var searchInput = document.getElementById('supersearch-input');
             if (searchInput.value !== event.data.data) {
                 searchInput.value = event.data.data;
                 searchInput.focus();
