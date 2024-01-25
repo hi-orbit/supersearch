@@ -14,21 +14,21 @@ jQuery(document).ready(function($) {
     $('#start-products-process').on('click', function() {
         var data = {
             'action': 'process_posts',
-            'nonce': myPlugin.ajax_nonce // Pass nonce for security
+            'nonce': wpSupersearch.ajax_nonce // Pass nonce for security
         };
         processPosts('products', data);
     });
     $('#start-posts-process').on('click', function() {
         var data = {
             'action': 'process_posts',
-            'nonce': myPlugin.ajax_nonce // Pass nonce for security
+            'nonce': wpSupersearch.ajax_nonce // Pass nonce for security
         };
         processPosts('posts', data);
     });
     $('#start-pages-process').on('click', function() {
         var data = {
             'action': 'process_posts',
-            'nonce': myPlugin.ajax_nonce // Pass nonce for security
+            'nonce': wpSupersearch.ajax_nonce // Pass nonce for security
         };
         processPosts('pages', data);
     });
