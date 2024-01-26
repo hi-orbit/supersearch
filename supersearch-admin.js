@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
 
+    const batch_id = Date.now().Math.floor(Math.random() * 100);
+
     // set the usage progress bar
     $('#searchlimit-progress-bar').css('width', searchlimit_progress + '%');
     $('#searchitem-progress-bar').css('width', searchitem_progress + '%');
@@ -43,6 +45,7 @@ jQuery(document).ready(function($) {
         data.page = page;
         data.product_count = product_count;
         data.post_type = post_type;
+        data.batch_id = batch_id;
     
         updateProgressBar(progress,post_type,product_count);
     

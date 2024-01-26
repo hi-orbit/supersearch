@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Super Search
  * Description: Super Search provides a hyperfast search solution for your WordPress site.
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: https://www.hi-orbit.com
  */
 
@@ -92,6 +92,7 @@ function supersearch_settings_page()
         <?php } else if ($active_tab == 'sync') { ?>
         <h2>Sync Products, Posts, and Pages to Super Search search index</h2>
         <p>We track when products, posts and pages are created and updated and once a day we automatically sync changes to our search index. If you want to sync everything immediately, click the buttons below.</p>
+        <p><strong>The sync process may take some time, please do not close this window until the sync has completed.</strong></p>
         <button class="button button-secondary" id="start-products-process">Sync Products To Search Index</button>
         <div style="margin-top:10px;margin-bottom:10px;">
             <div style="width:300px;border: 1px solid grey;"><div id="products-progress-bar" style="width: 0%; height: 20px; background-color: green;"></div></div>
