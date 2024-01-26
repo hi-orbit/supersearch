@@ -1,6 +1,9 @@
 jQuery(document).ready(function($) {
 
-    const batch_id = Date.now().Math.floor(Math.random() * 100);
+    const batch_id = 'xxxxxxxx-xxxx-4xxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });;
 
     // set the usage progress bar
     $('#searchlimit-progress-bar').css('width', searchlimit_progress + '%');

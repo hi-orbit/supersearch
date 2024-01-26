@@ -159,7 +159,9 @@ function process_posts_handler()
     if (isset($_POST['post_type'])) {
         $post_type = sanitize_text_field($_POST['post_type']);
     }
-
+    if (isset($_POST['batch_id'])) {
+        $batch_id = sanitize_text_field($_POST['batch_id']);
+    }
 
     // Get all posts
     $data = get_paginated_data($post_type, $page, $batch_size);
@@ -168,7 +170,7 @@ function process_posts_handler()
     $product_count = (isset($product_count)) ? $product_count + count($posts) : count($posts);
 
     $language_code = get_locale();
-    $response = supersearch_perform_curl_request($posts, 'createupdate?transform=wp&language=' . $language_code);
+    $response = supersearch_perform_curl_request($posts, 'createupdate?transform=wp&language=' . $language_code. '&batch_id='. $batch_id);
     $response = json_decode($response);
     if (isset($response->status_code) && $response->status_code == 508) {
         wp_send_json_error($response->message, 508);
