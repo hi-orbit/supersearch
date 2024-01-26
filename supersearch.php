@@ -124,27 +124,27 @@ function supersearch_settings_page()
 /**
  * Enqueue scripts
  */
-function enqueue_my_plugin_scripts()
+function enqueue_supersearch_admin_scripts()
 {
-    wp_enqueue_script('my-plugin-script', plugin_dir_url(__FILE__) . 'supersearch-admin.js', array('jquery'));
-    wp_localize_script('my-plugin-script', 'myPlugin', array(
-        'ajax_nonce' => wp_create_nonce('my_plugin_nonce')
+    wp_enqueue_script('supersearch-admin-script', plugin_dir_url(__FILE__) . 'supersearch-admin.js', array('jquery'));
+    wp_localize_script('supersearch-admin-script', 'supersearch', array(
+        'ajax_nonce' => wp_create_nonce('supersearch_nonce')
     ));
 }
-add_action('admin_enqueue_scripts', 'enqueue_my_plugin_scripts');
+add_action('admin_enqueue_scripts', 'enqueue_supersearch_admin_scripts');
 
 /**
  * Enqueue styles
  */
-function enqueue_my_plugin_styles()
+function enqueue_supersearch_admin_styles()
 {
-    wp_enqueue_style('my-plugin-style', plugin_dir_url(__FILE__) . 'supersearch-admin.css');
+    wp_enqueue_style('supersearch-admin-style', plugin_dir_url(__FILE__) . 'supersearch-admin.css');
 }
-add_action('admin_enqueue_scripts', 'enqueue_my_plugin_styles');
+add_action('admin_enqueue_scripts', 'enqueue_supersearch_admin_styles');
 
 function process_posts_handler()
 {
-    check_ajax_referer('my_plugin_nonce', 'nonce');
+    check_ajax_referer('supersearch_nonce', 'nonce');
 
     $batch_size = 10;
 
