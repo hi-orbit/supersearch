@@ -166,6 +166,7 @@ function process_posts_handler()
     // Get all posts
     $data = get_paginated_data($post_type, $page, $batch_size);
     $posts = $data['posts'];
+    $total_posts = $data['total_items'];
 
     $product_count = (isset($product_count)) ? $product_count + count($posts) : count($posts);
 
@@ -173,11 +174,14 @@ function process_posts_handler()
     $response = supersearch_perform_curl_request($posts, 'createupdate?transform=wp&language=' . $language_code. '&batch_id='. $batch_id);
     $response = json_decode($response);
     if (isset($response->status_code) && $response->status_code == 508) {
-        wp_send_json_error($response->message, 508);
+        if ($response->data->code == 1){
+            wp_send_json_error("<strong>You've Exceeded Your Plan Limit!</strong><br>Your current plan includes up to ". $response->data->plan_limit. " searchable items, but your website contains ". $total_posts. " items (including pages, posts, products).<br>Upgrade your plan to accommodate all items on your site.<br><a href='https://supersearch.hi-orbit.com/admin/plans' target='_blank'>View Plans Here...</a>");
+        } else {
+            wp_send_json_error($response->message, 508);
+        }
     }
 
     $page = $page + 1;
-    $total_posts = $data['total_items'];
     $progress = round(($page * $batch_size) / $total_posts * 100);
     wp_send_json_success(['progress' => $progress, 'page' => $page, 'product_count' => $product_count, 'total_posts' => $total_posts]);
 }

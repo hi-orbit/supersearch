@@ -59,7 +59,7 @@ jQuery(document).ready(function($) {
             success: function(response) {
 
                 if (response.success === false) {
-                    $('#' + post_type + '-progress-status').text(response.data);
+                    $('#' + post_type + '-progress-status').html(response.data);
                     return;
                 }
                 
