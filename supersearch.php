@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Plugin Name: Super Search
- * Description: Super Search provides a hyperfast search solution for your WordPress site.
+ * Plugin Name: SuperSearch
+ * Description: SuperSearch provides a hyperfast search solution for your WordPress site.
  * Version: 1.0.6
  * Author: https://www.hi-orbit.com
  */
@@ -16,8 +16,8 @@ add_action('admin_menu', 'supersearch_settings_menu');
 function supersearch_settings_menu()
 {
     add_options_page(
-        'Super Search Settings',       // Page title
-        'Super Search',                // Menu title
+        'SuperSearch Settings',       // Page title
+        'SuperSearch',                // Menu title
         'manage_options',              // Capability
         'supersearch-settings',        // Menu slug
         'supersearch_settings_page'    // Callback function
@@ -31,8 +31,8 @@ function supersearch_add_tabs() {
     $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'usage';
 
     ?>
-    <h1>Super Search Settings</h1>
-    <p>Super Search provides a hyperfast search solution for your WordPress site.</p>
+    <h1>SuperSearch Settings</h1>
+    <p>SuperSearch provides a hyperfast search solution for your WordPress site.</p>
     <h2 class="nav-tab-wrapper">
         <a href="?page=supersearch-settings&tab=usage" class="nav-tab <?php echo $active_tab == 'usage' ? 'nav-tab-active' : ''; ?>">Account Usage</a>
         <a href="?page=supersearch-settings&tab=settings" class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>">Settings</a>
@@ -74,6 +74,7 @@ function supersearch_settings_page()
                 Search index: <div style="width:300px;border: 1px solid grey;"><div id="searchitem-progress-bar" style="width: 0%; height: 20px; background-color: green;"></div></div>
                 <?php echo $stats->data->search_item_count; ?> of <?php echo  $stats->data->search_item_limit; ?>
                 <p><strong>Manage your plan <a href="https://supersearch.hi-orbit.com/admin/plans" target="_blank">here</a></strong></p>
+                <p>Watch our getting started guide <a href="https://hi-orbit.com/knowledge-base/getting-started/how-to-install-and-configure/" target="_blank">here</a></strong></p>
                 <?php
                 } else {
                     echo '<p>Unable to retrieve usage stats.</p>';
@@ -90,7 +91,7 @@ function supersearch_settings_page()
                     ?>
                 </form>
         <?php } else if ($active_tab == 'sync') { ?>
-        <h2>Sync Products, Posts, and Pages to Super Search search index</h2>
+        <h2>Sync Products, Posts, and Pages to SuperSearch search index</h2>
         <p>We track when products, posts and pages are created and updated and once a day we automatically sync changes to our search index. If you want to sync everything immediately, click the buttons below.</p>
         <p><strong>The sync process may take some time, please do not close this window until the sync has completed.</strong></p>
         <button class="button button-secondary" id="start-products-process">Sync Products To Search Index</button>
