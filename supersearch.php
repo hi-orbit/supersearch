@@ -128,7 +128,7 @@ function supersearch_settings_page()
  */
 function enqueue_supersearch_admin_scripts()
 {
-    wp_enqueue_script('supersearch-admin-script', plugin_dir_url(__FILE__) . 'supersearch-admin.js', array('jquery'));
+    wp_enqueue_script('supersearch-admin-script', plugin_dir_url(__FILE__) . 'supersearch-admin.js', array('jquery'),'1.3.0');
     wp_localize_script('supersearch-admin-script', 'supersearch', array(
         'ajax_nonce' => wp_create_nonce('supersearch_nonce')
     ));
