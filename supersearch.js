@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $.featherlight.close();
         }
     });
+    document.getElementById('supersearch-id').value = getOrCreateCookie();
 });
 
 function search_query(searchInput) {
@@ -67,4 +68,26 @@ function repositionFeatherlight(instance) {
         var mobile_top_offset = parseInt(document.getElementById('desktop_top_offset').value);
         instance.css('top', searchInputPosition.top + mobile_top_offset + 'px');
     }
+}
+
+function getOrCreateCookie() {
+    function generateGUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+    function getCookieValue() {
+        var matches = document.cookie.match('(^|;)\\s*_super_search_id\\s*=\\s*([^;]+)');
+        return matches ? decodeURIComponent(matches[2]) : null;
+    }
+    var cookieValue = getCookieValue();
+    if (!cookieValue) {
+        cookieValue = generateGUID();
+        var date = new Date();
+        date.setTime(date.getTime() + (90 * 24 * 60 * 60 * 1000)); // Set expiration date 90 days from now
+        var expires = "expires=" + date.toUTCString();
+        document.cookie = "_super_search_id=" + encodeURIComponent(cookieValue) + ";" + expires + ";path=/";
+    }
+    return cookieValue;
 }
