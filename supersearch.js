@@ -18,17 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     document.getElementById('supersearch-id').value = getOrCreateCookie();
 });
-
-function search_query(searchInput) {
+var debounceSearch = debounce(function (searchInput) {
     if (searchInput.value.trim() === '') {
         if (null !== $.featherlight.current()) {
             $.featherlight.current().close();
         }
     } else {
-        var searchInputPosition = $('#supersearch-input').offset();
-        $('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
-        var key = document.getElementById('supersearch-key').value;
         var searchQuery = encodeURIComponent(searchInput.value);
+        var key = document.getElementById('supersearch-key').value;
         var tracking_id = document.getElementById('supersearch-id').value;
         iframeURL = [searchURL + '/frame?', "search_term=", searchQuery, '&id=', tracking_id, '&key=', key].join('');
         if ($.featherlight.current()) {
@@ -40,13 +37,14 @@ function search_query(searchInput) {
                 closeIcon: '&#10005;',
                 loading: '<div class="super-search-loader"></div>',
                 iframe: iframeURL,
-                onKeyUp: function () {
+                afterOpen: function (event) {
+                    var searchInputPosition = $('#supersearch-input').offset();
+                    this.$instance.find('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
                     repositionFeatherlight(this.$instance);
                 },
                 beforeOpen: function (event) {
-                    repositionFeatherlight(this.$instance);
-                },
-                afterOpen: function (event) {
+                    var searchInputPosition = $('#supersearch-input').offset();
+                    this.$instance.find('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
                     repositionFeatherlight(this.$instance);
                 },
                 beforeClose: function (event) {
@@ -56,8 +54,24 @@ function search_query(searchInput) {
         }
         searchInput.focus();
     }
-};
-
+}, 300);
+// if we don't debouce the server will start to throttle
+// requests, so to avoid this and provide a better search
+// experience we debouce the key inputs to reduce the requests
+function search_query(searchInput) {
+    debounceSearch(searchInput);
+}
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 function repositionFeatherlight(instance) {
     var searchInputPosition = $('#supersearch-input').offset();
     if (searchInputPosition.top == 0){
@@ -69,7 +83,6 @@ function repositionFeatherlight(instance) {
         instance.css('top', searchInputPosition.top + mobile_top_offset + 'px');
     }
 }
-
 function getOrCreateCookie() {
     function generateGUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
