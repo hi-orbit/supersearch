@@ -15,7 +15,7 @@
  * Author: Rob Locke
  * Author URI: https://www.hi-orbit.com
  * Author email: hello@hi-orbit.com
- * License: GPLv2
+ * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * 
  * SuperSearch for WordPress is a free plugin and you can redistribute it and/or modify
