@@ -31,8 +31,8 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 function supersearch_enqueue_scripts() {
-    wp_enqueue_script('supersearch-js', plugin_dir_url(__FILE__) . 'supersearch.js', array('jquery'), '1.3.8', true);
-    wp_enqueue_script('featherlight', plugin_dir_url(__FILE__) . 'featherlight-1.7.13/release/featherlight.min.js', array('jquery'), '1.0', true);
+    wp_enqueue_script('supersearch-js', plugin_dir_url(__FILE__) . 'supersearch.js', array('jquery'), '1.0.9', true);
+    wp_enqueue_script('featherlight', plugin_dir_url(__FILE__) . 'featherlight-1.7.13/release/featherlight.min.js', array('jquery'), '1.7.13', true);
 }
 add_action('wp_enqueue_scripts', 'supersearch_enqueue_scripts');
 
