@@ -3,7 +3,7 @@
  * WordPress plugin "SuperSearch" main file, responsible for initiating the plugin.
  *
  * @package SuperSearch
- * @author Rob Locke
+ * @author Hi-Orbit
  * @version 1.0.9
  * 
  * Plugin Name: SuperSearch
@@ -11,7 +11,7 @@
  * Version: 1.0.9
  * Requires at least: 6.0
  * Requires PHP: 7.4
- * Author: Rob Locke
+ * Author: Hi-Orbit
  * Author URI: https://www.hi-orbit.com
  * Author email: hello@hi-orbit.com
  * License: GPLv3

@@ -1,32 +1,9 @@
 <?php
 /**
- * WordPress plugin "SuperSearch" front-end file, responsible for initiating the front-end website code.
- *
- * @package SuperSearch
- * @author Rob Locke
- * @version 1.0.9
- * 
- * 
- * Plugin Name: SuperSearch
- * Description: SuperSearch provides a hyperfast search solution for your WordPress site.
- * Version: 1.0.9
- * Requires at least: 6.0
- * Requires PHP: 7.4
- * Author: Rob Locke
- * Author URI: https://www.hi-orbit.com
- * Author email: hello@hi-orbit.com
- * License: GPLv3
- * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * 
- * SuperSearch for WordPress is a free plugin and you can redistribute it and/or modify
- * it under the terms of the GNU General Public License, version 3, as published by
- * the Free Software Foundation.
- * 
- * SuperSearch for WordPress is distributed to provide an integration with,
- * https://supersearch.hi-orbit.com but provided WITHOUT ANY WARRANTY; without 
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
- * See the GNU General Public License for more details.
- */
+* WordPress plugin "SuperSearch" front-end file, responsible for initiating the front-end website code.
+*
+* See supersearch.php for version and license information
+*/
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
