@@ -1,13 +1,9 @@
 <?php
 /**
  * WordPress plugin "SuperSearch" front-end file, responsible for initiating the front-end website code.
- *
- * @package SuperSearch
- * @author Hi-Orbit
- * @version 1.0.9
- * @copyright Copyright (C) 2024, Hi-Orbit
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
- * @see supersearch.php for further information
+ * Copyright (C) 2024, Hi-Orbit
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

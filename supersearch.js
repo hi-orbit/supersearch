@@ -1,10 +1,8 @@
 /**
  * WordPress plugin "SuperSearch" admin javascript file.
- * @package SuperSearch
- * @author Hi-Orbit
- * @version 1.0.9
- * @copyright Copyright (C) 2024, Hi-Orbit
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
+ * Copyright (C) 2024, Hi-Orbit
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 const SUPERSEARCH_SEARCH_URL = 'https://supersearch.hi-orbit.com';
 

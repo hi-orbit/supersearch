@@ -1,12 +1,6 @@
 <?php
 /**
  * WordPress plugin "SuperSearch" main file, responsible for initiating the plugin.
- *
- * @package SuperSearch
- * @author Hi-Orbit
- * @version 1.0.9
- * @copyright Copyright (C) 2024, Hi-Orbit
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  * 
  * Plugin Name: SuperSearch
  * Description: SuperSearch provides a hyperfast search solution for your WordPress site.
@@ -18,6 +12,7 @@
  * Author email: hello@hi-orbit.com
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * Copyright (C) 2024, Hi-Orbit
  * 
  * SuperSearch for WordPress is a free plugin and you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 3, as published by
