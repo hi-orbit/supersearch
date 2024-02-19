@@ -1,13 +1,35 @@
 <?php
-
 /**
+ * WordPress plugin "SuperSearch" main file, responsible for initiating the plugin.
+ *
+ * @package SuperSearch
+ * @author Rob Locke
+ * @version 1.0.9
+ * 
  * Plugin Name: SuperSearch
  * Description: SuperSearch provides a hyperfast search solution for your WordPress site.
- * Version: 1.0.8
- * Author: https://www.hi-orbit.com
+ * Version: 1.0.9
+ * Requires at least: 6.0
+ * Requires PHP: 7.4
+ * Author: Rob Locke
+ * Author URI: https://www.hi-orbit.com
+ * Author email: hello@hi-orbit.com
+ * License: GPLv2
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * 
+ * SuperSearch for WordPress is a free plugin and you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 3, as published by
+ * the Free Software Foundation.
+ * 
+ * SuperSearch for WordPress is distributed to provide an integration with,
+ * https://supersearch.hi-orbit.com but provided WITHOUT ANY WARRANTY; without 
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * See the GNU General Public License for more details.
  */
 
-define('_SEARCH_URL', 'https://supersearch.hi-orbit.com/api/search/');
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+define('_SUPERSEARCH_SEARCH_URL', 'https://supersearch.hi-orbit.com/api/search/');
 
 /**
  * Add a menu item to the admin menu
@@ -28,7 +50,8 @@ function supersearch_settings_menu()
  * Add tabs to the admin plugin settings options page
  */
 function supersearch_add_tabs() {
-    $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'usage';
+    $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'usage';
+    $active_tab = esc_attr($active_tab);
 
     ?>
     <h1>SuperSearch Settings</h1>
@@ -57,22 +80,22 @@ function supersearch_settings_page()
     }
     ?>
     <script>
-        searchitem_progress = <?php echo $stats->data->search_item_percent ?? 0;?>;
-        searchlimit_progress = <?php echo $stats->data->search_percent ?? 0;?>;
+        searchitem_progress = <?php echo esc_attr($stats->data->search_item_percent ?? 0);?>;
+        searchlimit_progress = <?php echo esc_attr($stats->data->search_percent ?? 0);?>;
     </script>
     
     <div style="content">
         <?php if ($active_tab == 'usage') { ?>
-            <img src="https://supersearch.hi-orbit.com/assets/images/supersearch_200x200.png" style="float:right;margin-left:20px;">
+            <img src="/wp-content/plugins/supersearch/supersearch_logo.png" style="float:right;margin-left:20px;">
             <h2>Current Plan Usage</h2>
                 <?php
                 if ($stats){ 
                 ?>
                 Search count: <div style="width:300px;border: 1px solid grey;"><div id="searchlimit-progress-bar" style="width: 0%; height: 20px; background-color: green;"></div></div>
-                <?php echo $stats->data->search_count; ?> of <?php echo  $stats->data->search_limit; ?>
+                <?php echo esc_attr($stats->data->search_count); ?> of <?php echo esc_attr($stats->data->search_limit); ?>
                 <br><br>
                 Search index: <div style="width:300px;border: 1px solid grey;"><div id="searchitem-progress-bar" style="width: 0%; height: 20px; background-color: green;"></div></div>
-                <?php echo $stats->data->search_item_count; ?> of <?php echo  $stats->data->search_item_limit; ?>
+                <?php echo esc_attr($stats->data->search_item_count); ?> of <?php echo esc_attr($stats->data->search_item_limit); ?>
                 <p><strong>Manage your plan <a href="https://supersearch.hi-orbit.com/admin/plans" target="_blank">here</a></strong></p>
                 <p>Watch our getting started guide <a href="https://hi-orbit.com/knowledge-base/getting-started/how-to-install-and-configure/" target="_blank">here</a></strong></p>
                 <?php
@@ -126,25 +149,25 @@ function supersearch_settings_page()
 /**
  * Enqueue scripts
  */
-function enqueue_supersearch_admin_scripts()
+function supersearch_enqueue_admin_scripts()
 {
     wp_enqueue_script('supersearch-admin-script', plugin_dir_url(__FILE__) . 'supersearch-admin.js', array('jquery'),'1.3.0');
     wp_localize_script('supersearch-admin-script', 'supersearch', array(
         'ajax_nonce' => wp_create_nonce('supersearch_nonce')
     ));
 }
-add_action('admin_enqueue_scripts', 'enqueue_supersearch_admin_scripts');
+add_action('admin_enqueue_scripts', 'supersearch_enqueue_admin_scripts');
 
 /**
  * Enqueue styles
  */
-function enqueue_supersearch_admin_styles()
+function supersearch_enqueue_admin_styles()
 {
     wp_enqueue_style('supersearch-admin-style', plugin_dir_url(__FILE__) . 'supersearch-admin.css');
 }
-add_action('admin_enqueue_scripts', 'enqueue_supersearch_admin_styles');
+add_action('admin_enqueue_scripts', 'supersearch_enqueue_admin_styles');
 
-function process_posts_handler()
+function supersearch_process_posts_handler()
 {
     check_ajax_referer('supersearch_nonce', 'nonce');
 
@@ -165,9 +188,9 @@ function process_posts_handler()
     }
 
     // Get all posts
-    $data = get_paginated_data($post_type, $page, $batch_size);
+    $data = supersearch_paginated_data($post_type, $page, $batch_size);
     $posts = $data['posts'];
-    $total_posts = $data['total_items'];
+    $total_posts = esc_attr($data['total_items']);
 
     $product_count = (isset($product_count)) ? $product_count + count($posts) : count($posts);
 
@@ -176,7 +199,7 @@ function process_posts_handler()
     $response = json_decode($response);
     if (isset($response->status_code) && $response->status_code == 508) {
         if ($response->data->code == 1){
-            wp_send_json_error("<strong>You've Exceeded Your Plan Limit!</strong><br>Your current plan includes up to ". $response->data->plan_limit. " searchable items, but your website contains ". $total_posts. " items (including pages, posts, products).<br>Upgrade your plan to accommodate all items on your site.<br><a href='https://supersearch.hi-orbit.com/admin/plans' target='_blank'>View Plans Here...</a>");
+            wp_send_json_error("<strong>You've Exceeded Your Plan Limit!</strong><br>Your current plan includes up to ". esc_attr($response->data->plan_limit). " searchable items, but your website contains ". $total_posts. " items (including pages, posts, products).<br>Upgrade your plan to accommodate all items on your site.<br><a href='https://supersearch.hi-orbit.com/admin/plans' target='_blank'>View Plans Here...</a>");
         } else {
             wp_send_json_error($response->message, 508);
         }
@@ -186,11 +209,10 @@ function process_posts_handler()
     $progress = round(($page * $batch_size) / $total_posts * 100);
     wp_send_json_success(['progress' => $progress, 'page' => $page, 'product_count' => $product_count, 'total_posts' => $total_posts]);
 }
-add_action('wp_ajax_process_posts', 'process_posts_handler');
+add_action('wp_ajax_process_posts', 'supersearch_process_posts_handler');
 
-function get_paginated_data($post_type, $page_number = 1, $posts_per_page = 10)
+function supersearch_paginated_data($post_type, $page_number = 1, $posts_per_page = 10)
 {
-
     switch ($post_type) {
         case 'products':
             $request = new WP_REST_Request('GET', '/wc/v3/products');
@@ -218,7 +240,7 @@ function get_paginated_data($post_type, $page_number = 1, $posts_per_page = 10)
 }
 
 // Add featured image URL to API response
-function add_featured_image_url_to_api_response($response)
+function supersearch_add_featured_image_url_to_api_response($response)
 {
     $featured_image_id = $response->data['featured_media'];
     if ($featured_image_id) {
@@ -227,18 +249,18 @@ function add_featured_image_url_to_api_response($response)
     }
     return $response;
 }
-add_filter('rest_prepare_post', 'add_featured_image_url_to_api_response', 10, 3);
+add_filter('rest_prepare_post', 'supersearch_add_featured_image_url_to_api_response', 10, 3);
 
 // Add the category information to the API response
-function add_category_info_to_api_response($response, $post)
+function supersearch_add_category_info_to_api_response($response, $post)
 {
     $category = get_the_category($post->ID);
     $response->data['categories'][0] = ['name' => $category[0]->name, 'slug' => $category[0]->slug];
     return $response;
 }
-add_filter('rest_prepare_post', 'add_category_info_to_api_response', 10, 3);
+add_filter('rest_prepare_post', 'supersearch_add_category_info_to_api_response', 10, 3);
 
-function add_plain_text_excerpt_to_api_response($response)
+function supersearch_add_plain_text_excerpt_to_api_response($response)
 {
     if (isset($response->data['excerpt']['rendered'])) {
         $content = strip_shortcodes($response->data['excerpt']['rendered']);
@@ -250,8 +272,8 @@ function add_plain_text_excerpt_to_api_response($response)
     }
     return $response;
 }
-add_filter('rest_prepare_post', 'add_plain_text_excerpt_to_api_response', 10, 3);
-add_filter('rest_prepare_page', 'add_plain_text_excerpt_to_api_response', 10, 3);
+add_filter('rest_prepare_post', 'supersearch_add_plain_text_excerpt_to_api_response', 10, 3);
+add_filter('rest_prepare_page', 'supersearch_add_plain_text_excerpt_to_api_response', 10, 3);
 
 
 // Register settings, a section, and fields
@@ -348,7 +370,7 @@ function supersearch_settings_mobile_top_offset_field_callback()
 /**
  * Save post event, that records the post ID of changed posts
  */
-function record_changed_posts( $post_id, $post, $update ) {
+function supersearch_record_changed_posts( $post_id, $post, $update ) {
 
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
     if ( ! current_user_can( 'edit_post', $post_id ) ) return;
@@ -362,7 +384,7 @@ function record_changed_posts( $post_id, $post, $update ) {
         update_option( 'supersearch_changed_posts', $changed_posts );
     }
 }
-add_action( 'save_post', 'record_changed_posts', 10, 3 );
+add_action( 'save_post', 'supersearch_record_changed_posts', 10, 3 );
 
 // crontab 
 
@@ -408,26 +430,39 @@ function supersearch_log( $message ) {
  */
 function supersearch_perform_curl_request($data, $action)
 {
-
-    $url = _SEARCH_URL . $action;
+    $url = _SUPERSEARCH_SEARCH_URL . $action;
     $public_key = get_option('supersearch_public_key');
     $private_key = get_option('supersearch_private_key');
     $token = md5($public_key . $private_key);
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array(
+    // Prepare the body of the request
+    $body = array(
         'public_key' => $public_key,
         'token' => $token,
         'data' => json_encode($data)
-    )));
+    );
 
-    $response = curl_exec($ch);
-    curl_close($ch);
+    // Make the HTTP POST request
+    $response = wp_remote_post($url, array(
+        'body' => $body,
+        'timeout' => '10', // Set timeout in seconds
+        'redirection' => '5', // Set number of redirections
+        'httpversion' => '1.0', // Set HTTP version
+        'blocking' => true, // Set to true to wait for the response
+        'headers' => array(),
+        'cookies' => array(),
+    ));
 
-    return $response ?: 'No response from server';
+    // Check for error in the response and return the appropriate result
+    if (is_wp_error($response)) {
+        $error_message = $response->get_error_message();
+        return "Something went wrong: $error_message";
+    } else {
+        $body = wp_remote_retrieve_body($response); // Retrieve the body of the response
+        return $body ?: 'No response from server';
+    }
 }
+
 
 // activate and deactivate hooks
 

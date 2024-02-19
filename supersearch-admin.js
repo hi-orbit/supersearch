@@ -1,3 +1,7 @@
+/**
+* WordPress plugin "SuperSearch" front-end javascript file.
+* See supersearch.php for version and license information
+*/
 jQuery(document).ready(function($) {
 
     const batch_id = 'xxxxxxxx-xxxx-4xxx'.replace(/[xy]/g, function(c) {
@@ -21,36 +25,36 @@ jQuery(document).ready(function($) {
             'action': 'process_posts',
             'nonce': supersearch.ajax_nonce // Pass nonce for security
         };
-        processPosts('products', data);
+        supersearch_process_posts('products', data);
     });
     $('#start-posts-process').on('click', function() {
         var data = {
             'action': 'process_posts',
             'nonce': supersearch.ajax_nonce // Pass nonce for security
         };
-        processPosts('posts', data);
+        supersearch_process_posts('posts', data);
     });
     $('#start-pages-process').on('click', function() {
         var data = {
             'action': 'process_posts',
             'nonce': supersearch.ajax_nonce // Pass nonce for security
         };
-        processPosts('pages', data);
+        supersearch_process_posts('pages', data);
     });
     
-    function updateProgressBar(progress, post_type, processed_count) {
+    function supersearch_update_progress_bar(progress, post_type, processed_count) {
         $('#' + post_type + '-progress-bar').css('width', progress + '%');
         $('#' + post_type + '-progress-status').text(progress + '% completed');
         document.getElementById(post_type + '-count').innerHTML = processed_count + ' ' + post_type + ' processed';
     }
     
-    function processPosts(post_type = 'products',data, page = 1,progress = 0,product_count = 0) {
+    function supersearch_process_posts(post_type = 'products',data, page = 1,progress = 0,product_count = 0) {
         data.page = page;
         data.product_count = product_count;
         data.post_type = post_type;
         data.batch_id = batch_id;
     
-        updateProgressBar(progress,post_type,product_count);
+        supersearch_update_progress_bar(progress,post_type,product_count);
     
         $.ajax({
             url: ajaxurl, // ajaxurl is automatically defined by WordPress
@@ -63,12 +67,12 @@ jQuery(document).ready(function($) {
                     return;
                 }
                 
-                updateProgressBar(response.data.progress,post_type,response.data.product_count);
+                supersearch_update_progress_bar(response.data.progress,post_type,response.data.product_count);
     
                 if (response.data.product_count < response.data.total_posts) {
-                    processPosts(data.post_type, data, response.data.page, response.data.progress, response.data.product_count);
+                    supersearch_process_posts(data.post_type, data, response.data.page, response.data.progress, response.data.product_count);
                 } else {
-                    updateProgressBar(100, data.post_type,response.data.total_posts);
+                    supersearch_update_progress_bar(100, data.post_type,response.data.total_posts);
                 }
             }
         });

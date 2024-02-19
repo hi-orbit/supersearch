@@ -1,21 +1,20 @@
 # SuperSearch #
 
-Contributors: hiorbit
+Contributors: hi-orbit
 Tags: supersearch, wordpress search, woocommerce search, product search, search, fast search, post search, page search, filterable search, mobile search, responsive search, divi search
-Requires at least: 6.4.2
+Requires at least: 6.0
 Tested up to: 6.4.2
-Requires PHP: 8.0
-Stable tag: 1.0.5
-License: MIT License
-License URI: https://www.mit.edu/~amini/LICENSE.md
+Requires PHP: 7.4
+Stable tag: 1.0.9
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Improved WordPress and WooCommerce search with lightning-fast results. Search products, pages and posts. No site slowdown!
 
 ## Description ##
-#### Enhance your search experience ####
+#### Enhance your user's search experience ####
 
 SuperSearch revolutionizes the way users interact with your website by providing a powerful and lightning-fast search solution. Say goodbye to the limitations of the default WordPress or WooCommerce search – SuperSearch is your drop-in solution for an enhanced user experience.
-
 
 #### Features ####
 
@@ -26,6 +25,7 @@ SuperSearch revolutionizes the way users interact with your website by providing
 *	**Responsive design** - Designed to adapt seamlessly to all screen sizes.
 *	**Display relevent categories** - SuperSearch shows a list of categories relevant to your search results.
 *	**No site slowdown, no matter how large** - Use SuperSearch without the worry of site slowdown, even on the most expansive websites or large product catalogues.
+*	**AI Powered Search (coming soon)** - Connect to OpenAI to allow your users to seach using human readable queries such as: show me products for a beach holiday in Italy.
 
 #### Why You Need An Improved WordPress Search ####
 
@@ -39,11 +39,11 @@ You can effortlessly enhance your website’s search functionality by adding Sup
 #### See search results fast ####
 
 **Here’s how we make it happen:**
-When you install the plugin, you syncronise your site data to our SuperSearch platform. We process this data to what we call a search index, which is data optimized for searching. You can manually update the search index when you choose from the plugin, or once a day the plugin will automatically send updates to the search index when a page, post or product created or updated.
+When you install the plugin, you syncronise your site data to our SuperSearch platform. We process this data to what we call a search index, which is data optimized for searching. You can manually update the search index when you choose from the plugin, or once a day the plugin will automatically send updates to the search index when a page, post or product have been created or updated.
 
 Our search index is a streamlined extract of your site data converted into structure that provides fast data lookup, significantly enhancing the speed of search results. We further process this data by implementing additional index optimization to improve the search results that handle typos and relavance of the results. The outcome? Lightning-fast context and relavant search results that transform the user experience, making finding information on your site quick, efficient, and incredibly responsive.
 
-The WordPress plugin is released under the MIT license, which does NOT extend to any associated Hi-Orbit services.
+The WordPress plugin is released under the GPLv3 license, which does NOT extend to any associated Hi-Orbit services.
 
 ### Installation ###
 * Log into your WordPress admin, navigate to Plugins > Add New, then search for SuperSearch.
@@ -92,7 +92,3 @@ Head to ‘search settings’
 Select Edit
 Enter your Hex code and save
 
-**Screenshots**
-1. Easily view account usage
-2. Super simple setup
-3. Sync products, pages and posts

@@ -1,8 +1,12 @@
-const searchURL = 'https://supersearch.hi-orbit.com';
+/**
+* WordPress plugin "SuperSearch" admin javascript file.
+* See supersearch.php for version and license information
+*/
+const SUPERSEARCH_SEARCH_URL = 'https://supersearch.hi-orbit.com';
 
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('message', function (event) {
-        if (event.origin !== searchURL) return;
+        if (event.origin !== SUPERSEARCH_SEARCH_URL) return;
         if (event.data && event.data.is_suggestion === 'true') {
             var searchInput = document.getElementById('supersearch-input');
             if (searchInput.value !== event.data.data) {
@@ -11,14 +15,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-    $(document).on('click', function(e) {
+    $(document).on('click', function (e) {
         if ($(e.target).closest('.featherlight').length === 0) {
             $.featherlight.close();
         }
     });
-    document.getElementById('supersearch-id').value = getOrCreateCookie();
+    document.getElementById('supersearch-id').value = supersearch_get_create_cookie();
 });
-var debounceSearch = debounce(function (searchInput) {
+var supersearch_process_search = supersearch_debounce(function (searchInput) {
     if (searchInput.value.trim() === '') {
         if (null !== $.featherlight.current()) {
             $.featherlight.current().close();
@@ -27,7 +31,7 @@ var debounceSearch = debounce(function (searchInput) {
         var searchQuery = encodeURIComponent(searchInput.value);
         var key = document.getElementById('supersearch-key').value;
         var tracking_id = document.getElementById('supersearch-id').value;
-        iframeURL = [searchURL + '/frame?', "search_term=", searchQuery, '&id=', tracking_id, '&key=', key].join('');
+        iframeURL = [SUPERSEARCH_SEARCH_URL + '/frame?', "search_term=", searchQuery, '&id=', tracking_id, '&key=', key].join('');
         if ($.featherlight.current()) {
             $.featherlight.current().$instance.find('iframe').attr('src', iframeURL);
         } else {
@@ -40,12 +44,12 @@ var debounceSearch = debounce(function (searchInput) {
                 afterOpen: function (event) {
                     var searchInputPosition = $('#supersearch-input').offset();
                     this.$instance.find('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
-                    repositionFeatherlight(this.$instance);
+                    supersearch_reposition_featherlight(this.$instance);
                 },
                 beforeOpen: function (event) {
                     var searchInputPosition = $('#supersearch-input').offset();
                     this.$instance.find('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
-                    repositionFeatherlight(this.$instance);
+                    supersearch_reposition_featherlight(this.$instance);
                 },
                 beforeClose: function (event) {
                     searchInput.value = '';
@@ -55,13 +59,10 @@ var debounceSearch = debounce(function (searchInput) {
         searchInput.focus();
     }
 }, 300);
-// if we don't debouce the server will start to throttle
-// requests, so to avoid this and provide a better search
-// experience we debouce the key inputs to reduce the requests
 function search_query(searchInput) {
-    debounceSearch(searchInput);
+    supersearch_process_search(searchInput);
 }
-function debounce(func, wait) {
+function supersearch_debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
         const later = () => {
@@ -72,20 +73,20 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
-function repositionFeatherlight(instance) {
+function supersearch_reposition_featherlight(instance) {
     var searchInputPosition = $('#supersearch-input').offset();
-    if (searchInputPosition.top == 0){
+    if (searchInputPosition.top == 0) {
         var mobile_top_offset = parseInt(document.getElementById('mobile_top_offset').value);
-        var mobile_top_offset =  searchInputPosition.top + mobile_top_offset;
+        var mobile_top_offset = searchInputPosition.top + mobile_top_offset;
         instance.css('top', mobile_top_offset + 'px');
     } else {
         var mobile_top_offset = parseInt(document.getElementById('desktop_top_offset').value);
         instance.css('top', searchInputPosition.top + mobile_top_offset + 'px');
     }
 }
-function getOrCreateCookie() {
+function supersearch_get_create_cookie() {
     function generateGUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
