@@ -1,7 +1,11 @@
 /**
-* WordPress plugin "SuperSearch" admin javascript file.
-* See supersearch.php for version and license information
-*/
+ * WordPress plugin "SuperSearch" admin javascript file.
+ * @package SuperSearch
+ * @author Hi-Orbit
+ * @version 1.0.9
+ * @copyright Copyright (C) 2024, Hi-Orbit
+ * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
+ */
 const SUPERSEARCH_SEARCH_URL = 'https://supersearch.hi-orbit.com';
 
 document.addEventListener('DOMContentLoaded', function () {
