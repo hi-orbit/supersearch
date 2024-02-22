@@ -17,39 +17,39 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-    $(document).on('click', function (e) {
-        if ($(e.target).closest('.featherlight').length === 0) {
-            $.featherlight.close();
+    jQuery(document).on('click', function (e) {
+        if (jQuery(e.target).closest('.featherlight').length === 0) {
+            jQuery.featherlight.close();
         }
     });
     document.getElementById('supersearch-id').value = supersearch_get_create_cookie();
 });
 var supersearch_process_search = supersearch_debounce(function (searchInput) {
     if (searchInput.value.trim() === '') {
-        if (null !== $.featherlight.current()) {
-            $.featherlight.current().close();
+        if (null !== jQuery.featherlight.current()) {
+            jQuery.featherlight.current().close();
         }
     } else {
         var searchQuery = encodeURIComponent(searchInput.value);
         var key = document.getElementById('supersearch-key').value;
         var tracking_id = document.getElementById('supersearch-id').value;
         iframeURL = [SUPERSEARCH_SEARCH_URL + '/frame?', "search_term=", searchQuery, '&id=', tracking_id, '&key=', key].join('');
-        if ($.featherlight.current()) {
-            $.featherlight.current().$instance.find('iframe').attr('src', iframeURL);
+        if (jQuery.featherlight.current()) {
+            jQuery.featherlight.current().$instance.find('iframe').attr('src', iframeURL);
         } else {
-            $.featherlight({
+            jQuery.featherlight({
                 closeOnClick: true,
                 closeOnEsc: true,
                 closeIcon: '&#10005;',
                 loading: '<div class="super-search-loader"></div>',
                 iframe: iframeURL,
                 afterOpen: function (event) {
-                    var searchInputPosition = $('#supersearch-input').offset();
+                    var searchInputPosition = jQuery('#supersearch-input').offset();
                     this.$instance.find('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
                     supersearch_reposition_featherlight(this.$instance);
                 },
                 beforeOpen: function (event) {
-                    var searchInputPosition = $('#supersearch-input').offset();
+                    var searchInputPosition = jQuery('#supersearch-input').offset();
                     this.$instance.find('.featherlight-iframe').css('top', searchInputPosition.top + 8 + 'px');
                     supersearch_reposition_featherlight(this.$instance);
                 },
@@ -76,7 +76,10 @@ function supersearch_debounce(func, wait) {
     };
 }
 function supersearch_reposition_featherlight(instance) {
-    var searchInputPosition = $('#supersearch-input').offset();
+    if (null === instance) {
+        return;
+    }
+    var searchInputPosition = jQuery('#supersearch-input').offset();
     if (searchInputPosition.top == 0) {
         var mobile_top_offset = parseInt(document.getElementById('mobile_top_offset').value);
         var mobile_top_offset = searchInputPosition.top + mobile_top_offset;

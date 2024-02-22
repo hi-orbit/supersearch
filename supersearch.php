@@ -4,7 +4,7 @@
  * 
  * Plugin Name: SuperSearch
  * Description: SuperSearch provides a hyperfast search solution for your WordPress site.
- * Version: 1.0.9
+ * Version: 1.0.10
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Hi-Orbit
